@@ -1,17 +1,19 @@
 package com.art.trolleybusinspection.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.art.trolleybusinspection.R;
@@ -20,20 +22,23 @@ import com.art.trolleybusinspection.entity.Trolley;
 import com.art.trolleybusinspection.entity.enums.TrolleyModel;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import static com.art.trolleybusinspection.config.ValueConstants.*;
 
-public class AddTrolleyActivity extends AppCompatActivity {
+public class AddTrolleyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private TrolleyRepository trolleyRepository;
     private ArrayAdapter<TrolleyModel> arrayAdapter;
     private EditText editTextTrolleyId;
     private Spinner spinnerTrolleyModel;
+    private EditText editTextDate;
     private EditText editTextTractionMotor;
     private EditText editTextAkb1;
     private EditText editTextAkb2;
     private EditText editTextDieselEngine;
     private EditText editTextDieselGenerator;
     private EditText editTextMillage;
+    private EditText editTextNotes;
 
 
     @Override
@@ -50,12 +55,26 @@ public class AddTrolleyActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,
                 TrolleyModel.values());
         spinnerTrolleyModel.setAdapter(arrayAdapter);
+        editTextDate = findViewById(R.id.edit_text_date);
+        editTextDate.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    this,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+            datePickerDialog.show();
+        });
+
         editTextTractionMotor = findViewById(R.id.edit_text_traction_engine);
         editTextAkb1 = findViewById(R.id.edit_text_akb1);
         editTextAkb2 = findViewById(R.id.edit_text_akb2);
         editTextDieselEngine = findViewById(R.id.edit_text_diesel_engine);
         editTextDieselGenerator = findViewById(R.id.edit_text_diesel_generator);
         editTextMillage = findViewById(R.id.edit_text_nobraukums);
+        editTextNotes = findViewById(R.id.edit_text_piezimes);
 
         Intent intent = getIntent();
         if (intent.hasExtra(TROLLEY_ID)) {
@@ -75,12 +94,14 @@ public class AddTrolleyActivity extends AppCompatActivity {
         }
         editTextTrolleyId.setText(String.valueOf(trolley.getId()));
         spinnerTrolleyModel.setSelection(arrayAdapter.getPosition(trolley.getModel()));
+        editTextDate.setText(trolley.getDate().format(DATE_FORMAT));
         editTextTractionMotor.setText(String.valueOf(trolley.getTractionMotorNumber()));
         editTextAkb1.setText(String.valueOf(trolley.getAkb1Id()));
         editTextAkb2.setText(String.valueOf(trolley.getAkb2Id()));
         editTextDieselGenerator.setText(String.valueOf(trolley.getDieselGeneratorNumber()));
         editTextDieselEngine.setText(String.valueOf(trolley.getDieselEngineNumber()));
         editTextMillage.setText(String.valueOf(trolley.getMileage()));
+        editTextNotes.setText(trolley.getNote());
     }
 
     @Override
@@ -95,7 +116,6 @@ public class AddTrolleyActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save_button:
                 saveTrolley();
-                Toast.makeText(this, "Trolley saved", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,8 +128,14 @@ public class AddTrolleyActivity extends AppCompatActivity {
             return;
         }
         Trolley trolley = new Trolley(Integer.parseInt(editTextTrolleyId.getText().toString().trim()));
-        trolley.setDate(LocalDate.now());
+//        trolley.setDate(LocalDate.now());
         trolley.setModel(TrolleyModel.valueOf(spinnerTrolleyModel.getSelectedItem().toString()));
+
+        if (editTextDate.getText().toString().trim().isEmpty()) {
+            trolley.setDate(LocalDate.now());
+        } else {
+            trolley.setDate(LocalDate.parse(editTextDate.getText().toString().trim(), DATE_FORMAT));
+        }
         if (editTextMillage.getText().toString().trim().isEmpty()) {
             trolley.setMileage(0);
         } else {
@@ -140,12 +166,37 @@ public class AddTrolleyActivity extends AppCompatActivity {
         } else {
             trolley.setDieselGeneratorNumber(Integer.parseInt(editTextDieselGenerator.getText().toString().trim()));
         }
+        if (editTextNotes.getText().toString().trim().isEmpty()) {
+            trolley.setNote("");
+        } else {
+            trolley.setNote(editTextNotes.getText().toString());
+        }
+
+
         if (getIntent().getIntExtra(TROLLEY_ID, -1) == -1) {
-            trolleyRepository.insert(trolley);
+            Trolley t = trolleyRepository.findById(trolley.getId());
+            if (t != null) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Confirm save")
+                        .setMessage("Trolleybus with such id already exists,\ndo you want to save it with new data?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            trolleyRepository.insert(trolley);
+                            Toast.makeText(this, "Trolley saved", Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            finish();
+                        }).setNegativeButton("No", null).show();
+            }
         } else {
             trolleyRepository.update(trolley);
+            Toast.makeText(this, "Trolley updated", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+            finish();
         }
-        setResult(RESULT_OK);
-        finish();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        LocalDate date = LocalDate.of(year, month + 1, dayOfMonth);
+        editTextDate.setText(date.format(DATE_FORMAT));
     }
 }

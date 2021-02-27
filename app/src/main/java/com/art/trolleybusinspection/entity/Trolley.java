@@ -33,6 +33,9 @@ public class Trolley implements Comparable<Trolley> {
     private int akb2Id;
     @ColumnInfo(name = "mileage")
     private int mileage;
+    @ColumnInfo(name = "notes")
+    private String note;
+
 
     public Trolley(int id) {
         this.id = id;
@@ -104,6 +107,14 @@ public class Trolley implements Comparable<Trolley> {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

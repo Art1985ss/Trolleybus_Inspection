@@ -5,89 +5,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddTrolleyActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Trolejbusa numurs :"/>
-    <EditText
-        android:id="@+id/edit_text_trolley_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Trolley id"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Modelis :"/>
-    <Spinner
-        android:id="@+id/spinner_trolley_model"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vilceja numurs :"/>
-    <EditText
-        android:id="@+id/edit_text_traction_engine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Vilceja numurs"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AKB 1 :"/>
-    <EditText
-        android:id="@+id/edit_text_akb1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="AKB 1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AKB 2 :"/>
-    <EditText
-        android:id="@+id/edit_text_akb2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="AKB 2"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dizeldzineja numurs :"/>
-    <EditText
-        android:id="@+id/edit_text_diesel_engine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Dizeldzineja numurs"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dizelgeneratora numurs :"/>
-    <EditText
-        android:id="@+id/edit_text_diesel_generator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Dizelgeneratora numurs"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nobraukums :"/>
-    <EditText
-        android:id="@+id/edit_text_nobraukums"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Nobraukums"/>
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trolejbusa numurs :" />
+
+        <EditText
+            android:id="@+id/edit_text_trolley_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Trolley id"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modelis :" />
+
+        <Spinner
+            android:id="@+id/spinner_trolley_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datums :"/>
+
+        <EditText
+            android:id="@+id/edit_text_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="dd.mm.yyyy"
+            android:inputType="date"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vilceja numurs :" />
+
+        <EditText
+            android:id="@+id/edit_text_traction_engine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vilceja numurs"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AKB 1 :" />
+
+        <EditText
+            android:id="@+id/edit_text_akb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="AKB 1"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AKB 2 :" />
+
+        <EditText
+            android:id="@+id/edit_text_akb2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="AKB 2"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dizelgeneratora numurs :" />
+
+        <EditText
+            android:id="@+id/edit_text_diesel_generator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dizelgeneratora numurs"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dizeldzineja numurs :" />
+
+        <EditText
+            android:id="@+id/edit_text_diesel_engine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dizeldzineja numurs"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nobraukums :" />
+
+        <EditText
+            android:id="@+id/edit_text_nobraukums"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nobraukums"
+            android:inputType="number" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Piezimes :"/>
+        <EditText
+            android:id="@+id/edit_text_piezimes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:hint="Piezimes"
+            android:inputType="textMultiLine"/>
+
+
     </LinearLayout>
 
 </ScrollView>

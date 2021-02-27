@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.art.trolleybusinspection.R;
+import com.art.trolleybusinspection.config.ValueConstants;
 import com.art.trolleybusinspection.entity.Trolley;
 
 import java.util.ArrayList;
@@ -58,23 +59,13 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     class TrolleyHolder extends RecyclerView.ViewHolder {
         private final TextView textViewTrolleyId;
         private final TextView textViewTrollModel;
-        private final TextView textViewAkb1;
-        private final TextView textViewAkb2;
-        private final TextView textViewTractionMotorNum;
-        private final TextView textViewDieselEngine;
-        private final TextView textViewDieselGenerator;
-        private final TextView textViewMileage;
+        private final TextView text_view_date;
 
         public TrolleyHolder(@NonNull View itemView) {
             super(itemView);
             textViewTrolleyId = itemView.findViewById(R.id.text_view_trolley_id);
             textViewTrollModel = itemView.findViewById(R.id.text_view_trolley_model);
-            textViewAkb1 = itemView.findViewById(R.id.text_view_akb1);
-            textViewAkb2 = itemView.findViewById(R.id.text_view_akb2);
-            textViewTractionMotorNum = itemView.findViewById(R.id.text_view_traction_motor_num);
-            textViewDieselEngine = itemView.findViewById(R.id.text_view_diesel_engine_num);
-            textViewDieselGenerator = itemView.findViewById(R.id.text_view_diesel_generator_num);
-            textViewMileage = itemView.findViewById(R.id.text_view_mileage);
+            text_view_date = itemView.findViewById(R.id.text_view_date);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (listener != null && position != RecyclerView.NO_POSITION) {
@@ -86,12 +77,7 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
         public void setTrolley(Trolley trolley) {
             textViewTrolleyId.setText(String.valueOf(trolley.getId()));
             textViewTrollModel.setText(trolley.getModel().toString());
-            textViewAkb1.setText(String.valueOf(trolley.getAkb1Id()));
-            textViewAkb2.setText(String.valueOf(trolley.getAkb2Id()));
-            textViewTractionMotorNum.setText(String.valueOf(trolley.getTractionMotorNumber()));
-            textViewDieselEngine.setText(String.valueOf(trolley.getDieselEngineNumber()));
-            textViewDieselGenerator.setText(String.valueOf(trolley.getDieselGeneratorNumber()));
-            textViewMileage.setText(String.valueOf(trolley.getMileage()));
+            text_view_date.setText(String.valueOf(trolley.getDate().format(ValueConstants.DATE_FORMAT)));
         }
 
 
