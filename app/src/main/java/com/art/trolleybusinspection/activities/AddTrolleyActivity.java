@@ -128,7 +128,6 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
             return;
         }
         Trolley trolley = new Trolley(Integer.parseInt(editTextTrolleyId.getText().toString().trim()));
-//        trolley.setDate(LocalDate.now());
         trolley.setModel(TrolleyModel.valueOf(spinnerTrolleyModel.getSelectedItem().toString()));
 
         if (editTextDate.getText().toString().trim().isEmpty()) {
@@ -185,6 +184,11 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
                             setResult(RESULT_OK);
                             finish();
                         }).setNegativeButton("No", null).show();
+            } else {
+                Toast.makeText(this, "Trolley saved", Toast.LENGTH_SHORT).show();
+                trolleyRepository.insert(trolley);
+                setResult(RESULT_OK);
+                finish();
             }
         } else {
             trolleyRepository.update(trolley);
