@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.art.trolleybusinspection">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +15,9 @@
         android:theme="@style/Theme.TrolleybusInspection">
         <activity
             android:name=".activities.AddTrolleyActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.Statistics"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.MainActivity"

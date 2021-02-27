@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.art.trolleybusinspection.R;
@@ -21,17 +24,22 @@ import static com.art.trolleybusinspection.config.ValueConstants.*;
 
 public class MainActivity extends AppCompatActivity {
     private TrolleyViewModel viewModel;
+    private TrolleyAdapter trolleyAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prepareView(false);
+    }
+
+    private void prepareView(boolean sortByDate) {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        TrolleyAdapter trolleyAdapter = new TrolleyAdapter();
+        trolleyAdapter = new TrolleyAdapter(sortByDate);
         recyclerView.setAdapter(trolleyAdapter);
 
         viewModel = new ViewModelProvider(
@@ -80,5 +88,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void recreateActivity() {
         recreate();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_sort, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.sort_by_date) {
+            if (item.isChecked()) {
+                item.setChecked(false);
+                prepareView(false);
+            } else {
+                item.setChecked(true);
+                prepareView(true);
+            }
+        } else if (item.getItemId() == R.id.show_statistics) {
+            Intent intent = new Intent(MainActivity.this, Statistics.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 }

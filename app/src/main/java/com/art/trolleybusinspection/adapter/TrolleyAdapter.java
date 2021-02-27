@@ -13,11 +13,18 @@ import com.art.trolleybusinspection.config.ValueConstants;
 import com.art.trolleybusinspection.entity.Trolley;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyHolder> {
     private List<Trolley> trolleys = new ArrayList<>();
     private OnItemClickListener listener;
+    private boolean sortByDate = false;
+
+    public TrolleyAdapter(boolean sortByDate) {
+        this.sortByDate = sortByDate;
+    }
 
     @NonNull
     @Override
@@ -39,7 +46,11 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     }
 
     public void setTrolleys(List<Trolley> trolleys) {
-        this.trolleys = trolleys;
+        if (sortByDate) {
+            this.trolleys = trolleys.stream().sorted(Comparator.comparing(Trolley::getDate).reversed()).collect(Collectors.toList());
+        } else {
+            this.trolleys = trolleys;
+        }
         notifyDataSetChanged();
     }
 
@@ -48,12 +59,17 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     }
 
 
+
     public interface OnItemClickListener {
         void onItemClick(Trolley trolley);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setSortByDate(boolean sortByDate) {
+        this.sortByDate = sortByDate;
     }
 
     class TrolleyHolder extends RecyclerView.ViewHolder {
@@ -79,6 +95,7 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
             textViewTrollModel.setText(trolley.getModel().toString());
             text_view_date.setText(String.valueOf(trolley.getDate().format(ValueConstants.DATE_FORMAT)));
         }
+
 
 
     }
