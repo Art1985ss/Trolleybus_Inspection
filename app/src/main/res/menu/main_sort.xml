@@ -13,5 +13,10 @@
         android:title="Show statistics"
         android:icon="@drawable/ic_statistics"
         app:showAsAction="withText"/>
+    <item
+        android:id="@+id/export_to_csv"
+        android:title="Export to csv"
+        android:icon="@drawable/ic_baseline_import_export_24"
+        app:showAsAction="withText" />
 
 </menu>

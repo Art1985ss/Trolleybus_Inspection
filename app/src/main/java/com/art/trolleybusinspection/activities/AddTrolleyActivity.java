@@ -133,7 +133,12 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
         if (editTextDate.getText().toString().trim().isEmpty()) {
             trolley.setDate(LocalDate.now());
         } else {
-            trolley.setDate(LocalDate.parse(editTextDate.getText().toString().trim(), DATE_FORMAT));
+            try {
+                trolley.setDate(LocalDate.parse(editTextDate.getText().toString().trim(), DATE_FORMAT));
+            } catch (Exception e) {
+                Toast.makeText(this, "Please provide date in format :\ndd.MM.yyyy", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
         if (editTextMillage.getText().toString().trim().isEmpty()) {
             trolley.setMileage(0);

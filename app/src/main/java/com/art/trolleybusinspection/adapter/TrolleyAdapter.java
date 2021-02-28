@@ -1,18 +1,23 @@
 package com.art.trolleybusinspection.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.art.trolleybusinspection.R;
 import com.art.trolleybusinspection.config.ValueConstants;
 import com.art.trolleybusinspection.entity.Trolley;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +64,6 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     }
 
 
-
     public interface OnItemClickListener {
         void onItemClick(Trolley trolley);
     }
@@ -94,9 +98,20 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
             textViewTrolleyId.setText(String.valueOf(trolley.getId()));
             textViewTrollModel.setText(trolley.getModel().toString());
             text_view_date.setText(String.valueOf(trolley.getDate().format(ValueConstants.DATE_FORMAT)));
+            text_view_date.setBackgroundColor(dateColor(trolley));
         }
 
-
+        private int dateColor(Trolley trolley) {
+            LocalDate dateNow = LocalDate.now();
+            LocalDate dateOld = trolley.getDate();
+            long days = ChronoUnit.DAYS.between(dateOld, dateNow);
+            if (days > 120){
+                return Color.rgb(223, 0, 254);
+            }
+            float[] hsl = {0, 1, 0.5f};
+            hsl[0] = (float) ((float) (90 - days) / 90.0) * 130;
+            return ColorUtils.HSLToColor(hsl);
+        }
 
     }
 }

@@ -9,4 +9,6 @@ public class ValueConstants {
     public static final int EDIT_REQUEST = 2;
 
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    public static final String CSV_NAME = "Trolleys list.csv";
 }

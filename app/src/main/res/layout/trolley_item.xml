@@ -22,7 +22,7 @@
                     android:id="@+id/text_view_trolley_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#33ff33"
+                    android:background="#00aeff"
                     android:layout_weight="@android:integer/config_mediumAnimTime"
                     android:text="1" />
             </TableRow>

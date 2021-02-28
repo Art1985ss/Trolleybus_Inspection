@@ -18,7 +18,14 @@ import android.widget.Toast;
 import com.art.trolleybusinspection.R;
 import com.art.trolleybusinspection.TrolleyViewModel;
 import com.art.trolleybusinspection.adapter.TrolleyAdapter;
+import com.art.trolleybusinspection.entity.Trolley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.art.trolleybusinspection.config.ValueConstants.*;
 
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 builder
                         .setPositiveButton("Ok", (dialog, which) -> {
                             viewModel.delete(trolleyAdapter.getTrolleyAt(viewHolder.getAdapterPosition()));
-                            Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Trolleybus deleted", Toast.LENGTH_SHORT).show();
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             trolleyAdapter.notifyDataSetChanged();
@@ -110,6 +117,15 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.show_statistics) {
             Intent intent = new Intent(MainActivity.this, Statistics.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.export_to_csv) {
+            String text = "id;model;date;traction engine;akb1;akb2;generator;diesel engine;millage;notes;\n";
+            text += Objects.requireNonNull(viewModel.getAll().getValue()).stream().map(Trolley::toCSV).collect(Collectors.joining("\n"));
+            try(FileOutputStream fos = openFileOutput(CSV_NAME, MODE_PRIVATE)) {
+                fos.write(text.getBytes());
+                Toast.makeText(this, "File saved : \n" + getDataDir() + CSV_NAME, Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return super.onOptionsItemSelected(item);
 
