@@ -17,7 +17,6 @@ import com.art.trolleybusinspection.entity.Trolley;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyHolder> {
     private List<Trolley> trolleys = new ArrayList<>();
     private OnItemClickListener listener;
-    private boolean sortByDate = false;
+    private final boolean sortByDate;
 
     public TrolleyAdapter(boolean sortByDate) {
         this.sortByDate = sortByDate;
@@ -72,9 +71,6 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
         this.listener = listener;
     }
 
-    public void setSortByDate(boolean sortByDate) {
-        this.sortByDate = sortByDate;
-    }
 
     class TrolleyHolder extends RecyclerView.ViewHolder {
         private final TextView textViewTrolleyId;

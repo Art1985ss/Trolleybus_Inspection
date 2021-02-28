@@ -21,7 +21,6 @@ import com.art.trolleybusinspection.adapter.TrolleyAdapter;
 import com.art.trolleybusinspection.entity.Trolley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -80,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
                             viewModel.delete(trolleyAdapter.getTrolleyAt(viewHolder.getAdapterPosition()));
                             Toast.makeText(MainActivity.this, "Trolleybus deleted", Toast.LENGTH_SHORT).show();
                         })
-                        .setNegativeButton("No", (dialog, which) -> {
-                            trolleyAdapter.notifyDataSetChanged();
-                        }).show();
+                        .setNegativeButton("No", (dialog, which) -> trolleyAdapter.notifyDataSetChanged()).show();
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -91,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(TROLLEY_ID, trolley.getId());
             startActivityForResult(intent, EDIT_REQUEST);
         });
-    }
-
-    public void recreateActivity() {
-        recreate();
     }
 
     @Override

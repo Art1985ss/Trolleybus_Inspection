@@ -2,7 +2,6 @@ package com.art.trolleybusinspection.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -121,9 +120,5 @@ public class TrolleyRepository implements IOperations<Trolley> {
         protected Trolley doInBackground(Integer... integers) {
             return trolleyDao.findById(integers[0]);
         }
-    }
-
-    public int size() {
-        return allTrolleys.getValue().size();
     }
 }
