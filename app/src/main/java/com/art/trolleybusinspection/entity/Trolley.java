@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.art.trolleybusinspection.config.ValueConstants;
-import com.art.trolleybusinspection.database.dao.Converter;
+import com.art.trolleybusinspection.database.converters.Converter;
 import com.art.trolleybusinspection.entity.enums.TrolleyModel;
 
 import java.time.LocalDate;
@@ -126,7 +126,14 @@ public class Trolley implements Comparable<Trolley> {
 
     @Override
     public String toString() {
-        return id + " " + date;
+        return "ID " + id + " Model " + model + "\n" +
+                "Date " + date.format(ValueConstants.DATE_FORMAT) + "\n" +
+                "Vilcejs " + tractionMotorNumber + "\n" +
+                "Dizelgenerators " + dieselGeneratorNumber + "\n" +
+                "Dizeldzinejs " + dieselEngineNumber + "\n" +
+                "AKB " + akb1Id + " " + akb2Id + "\n" +
+                "Nobraukums " + mileage + "\n" +
+                "Piezimes : " + note + "\n";
     }
 
     public String toCSV() {

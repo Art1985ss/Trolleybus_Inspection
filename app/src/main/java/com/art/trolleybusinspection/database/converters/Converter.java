@@ -1,4 +1,4 @@
-package com.art.trolleybusinspection.database.dao;
+package com.art.trolleybusinspection.database.converters;
 
 import androidx.room.TypeConverter;
 

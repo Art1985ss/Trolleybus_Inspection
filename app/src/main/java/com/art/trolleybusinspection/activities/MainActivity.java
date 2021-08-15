@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import com.art.trolleybusinspection.adapter.TrolleyAdapter;
 import com.art.trolleybusinspection.entity.Trolley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -111,16 +114,22 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Statistics.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.export_to_csv) {
-            String text = "id;model;date;traction engine;akb1;akb2;generator;diesel engine;millage;notes;\n";
-            text += Objects.requireNonNull(viewModel.getAll().getValue()).stream().map(Trolley::toCSV).collect(Collectors.joining("\n"));
-            try(FileOutputStream fos = openFileOutput(CSV_NAME, MODE_PRIVATE)) {
-                fos.write(text.getBytes());
-                Toast.makeText(this, "File saved : \n" + getDataDir() + CSV_NAME, Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            exportToCSV();
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private void exportToCSV() {
+        String text = "id;model;date;traction engine;akb1;akb2;generator;diesel engine;millage;notes;\n";
+        text += Objects.requireNonNull(viewModel.getAll().getValue()).stream().map(Trolley::toCSV).collect(Collectors.joining("\n"));
+        String path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/" + CSV_NAME;
+        try (FileOutputStream fos =new FileOutputStream(new File(path))) {
+            fos.write(text.getBytes());
+            Toast.makeText(this, "File saved : \n" + path, Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }

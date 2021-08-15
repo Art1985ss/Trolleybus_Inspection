@@ -5,6 +5,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -117,9 +120,25 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
             case R.id.save_button:
                 saveTrolley();
                 return true;
+            case R.id.copy:
+                copy();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void copy() {
+        ClipboardManager clipboardManager =
+                (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        Trolley trolley = trolleyRepository
+                .findById(Integer.parseInt(editTextTrolleyId.getText().toString().trim()));
+        ClipData clipData = ClipData.newPlainText(
+                "Trolley id " + trolley.getId(),
+                trolley.toString());
+        clipboardManager.setPrimaryClip(clipData);
+
+        Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 
     private void saveTrolley() {

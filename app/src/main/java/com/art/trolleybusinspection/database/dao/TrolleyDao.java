@@ -30,4 +30,5 @@ public interface TrolleyDao extends IOperations<Trolley> {
     LiveData<List<Trolley>> getAll();
 
 
+
 }
