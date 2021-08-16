@@ -24,26 +24,15 @@
                 android:id="@+id/text_view_trolley_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="#00aeff"
                 android:text="1" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Model :" />
 
             <TextView
                 android:id="@+id/text_view_trolley_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="model" />
         </TableRow>
 
@@ -55,17 +44,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Date : " />
+                android:text="R0 : " />
 
             <TextView
-                android:id="@+id/text_view_date"
+                android:id="@+id/text_view_dateR0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="31.05.1985" />
 
             <TextView
-                android:id="@+id/text_view_days"
+                android:id="@+id/text_view_daysR0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:width="10dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:text="100" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="R1 : " />
+
+            <TextView
+                android:id="@+id/text_view_dateR1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="31.05.1985" />
+
+            <TextView
+                android:id="@+id/text_view_daysR1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:width="10dp"

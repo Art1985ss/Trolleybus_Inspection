@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,7 +29,7 @@ import java.util.Calendar;
 
 import static com.art.trolleybusinspection.config.ValueConstants.*;
 
-public class AddTrolleyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddTrolleyActivity extends AppCompatActivity {
     private TrolleyRepository trolleyRepository;
     private ArrayAdapter<TrolleyModel> arrayAdapter;
     private EditText editTextTrolleyId;
@@ -60,12 +59,21 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
                 android.R.layout.simple_spinner_item,
                 TrolleyModel.values());
         spinnerTrolleyModel.setAdapter(arrayAdapter);
+
+        DatePickerDialog.OnDateSetListener onDateSetListenerR0 = (view, year, month, dayOfMonth) -> {
+            LocalDate date = LocalDate.of(year, month + 1, dayOfMonth);
+            editTextDateR0.setText(date.format(DATE_FORMAT));
+        };
+        DatePickerDialog.OnDateSetListener onDateSetListenerR1 = (view, year, month, dayOfMonth) -> {
+            LocalDate date = LocalDate.of(year, month + 1, dayOfMonth);
+            editTextDateR1.setText(date.format(DATE_FORMAT));
+        };
         editTextDateR0 = findViewById(R.id.edit_text_dateR0);
         editTextDateR0.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
-                    this,
+                    onDateSetListenerR0,
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
@@ -77,7 +85,7 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
-                    this,
+                    onDateSetListenerR1,
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
@@ -112,6 +120,7 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
         editTextTrolleyId.setText(String.valueOf(trolley.getId()));
         spinnerTrolleyModel.setSelection(arrayAdapter.getPosition(trolley.getModel()));
         editTextDateR0.setText(trolley.getDateR0().format(DATE_FORMAT));
+        editTextDateR1.setText(trolley.getDateR1().format(DATE_FORMAT));
         editTextTractionMotor.setText(String.valueOf(trolley.getTractionMotorNumber()));
         editTextAkb1.setText(String.valueOf(trolley.getAkb1Id()));
         editTextAkb2.setText(String.valueOf(trolley.getAkb2Id()));
@@ -253,11 +262,5 @@ public class AddTrolleyActivity extends AppCompatActivity implements DatePickerD
             trolley.setNote(editTextNotes.getText().toString());
         }
         return trolley;
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        LocalDate date = LocalDate.of(year, month + 1, dayOfMonth);
-        editTextDateR0.setText(date.format(DATE_FORMAT));
     }
 }

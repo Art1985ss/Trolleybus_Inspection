@@ -138,13 +138,14 @@ public class Trolley implements Comparable<Trolley> {
     @Override
     public String toString() {
         return "ID " + id + " Model " + model + "\n" +
-                "Date " + dateR0.format(ValueConstants.DATE_FORMAT) + "\n" +
-                "Vilcejs " + tractionMotorNumber + "\n" +
-                "Dizelgenerators " + dieselGeneratorNumber + "\n" +
-                "Dizeldzinejs " + dieselEngineNumber + "\n" +
-                "AKB " + akb1Id + " " + akb2Id + "\n" +
-                "Nobraukums " + mileage + "\n" +
-                "Piezimes : " + note + "\n";
+                "R0 " + dateR0.format(ValueConstants.DATE_FORMAT) + "\n" +
+                "R1 " + dateR1.format(ValueConstants.DATE_FORMAT) + "\n" +
+                (tractionMotorNumber != 0 ?  "Vilcejs " + tractionMotorNumber + "\n" : "") +
+                (dieselGeneratorNumber != 0 ?  "Dizelgenerators " + dieselGeneratorNumber + "\n" : "") +
+                (dieselEngineNumber != 0 ? "Dizeldzinejs " + dieselEngineNumber + "\n" : "") +
+                (akb1Id != 0 && akb2Id != 0 ? "AKB " + akb1Id + " " + akb2Id + "\n" : "") +
+                (mileage != 0 ?  "Nobraukums " + mileage + "\n" : "") +
+                (note.isEmpty() ? "" : note + "\n");
     }
 
     public String toCSV() {

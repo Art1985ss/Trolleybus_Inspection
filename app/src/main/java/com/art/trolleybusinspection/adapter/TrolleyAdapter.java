@@ -75,15 +75,19 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     class TrolleyHolder extends RecyclerView.ViewHolder {
         private final TextView textViewTrolleyId;
         private final TextView textViewTrollModel;
-        private final TextView textViewDate;
-        private final TextView textViewDays;
+        private final TextView textViewDateR0;
+        private final TextView textViewDaysR0;
+        private final TextView textViewDateR1;
+        private final TextView textViewDaysR1;
 
         public TrolleyHolder(@NonNull View itemView) {
             super(itemView);
             textViewTrolleyId = itemView.findViewById(R.id.text_view_trolley_id);
             textViewTrollModel = itemView.findViewById(R.id.text_view_trolley_model);
-            textViewDate = itemView.findViewById(R.id.text_view_date);
-            textViewDays = itemView.findViewById(R.id.text_view_days);
+            textViewDateR0 = itemView.findViewById(R.id.text_view_dateR0);
+            textViewDaysR0 = itemView.findViewById(R.id.text_view_daysR0);
+            textViewDateR1 = itemView.findViewById(R.id.text_view_dateR1);
+            textViewDaysR1 = itemView.findViewById(R.id.text_view_daysR1);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (listener != null && position != RecyclerView.NO_POSITION) {
@@ -99,17 +103,26 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
         }
 
         private void fillDateField(Trolley trolley) {
-            float maxDays = 120.0f;
-            float maxH = 130.0f;
-            LocalDate dateNow = LocalDate.now();
-            LocalDate dateOld = trolley.getDateR0();
-            long days = ChronoUnit.DAYS.between(dateOld, dateNow);
-            float[] hsl = {0, 1, 0.5f};
-            hsl[0] = days > maxDays ? 0 : (maxDays - days) / maxDays * maxH;
-            textViewDate.setText(trolley.getDateR0().format(ValueConstants.DATE_FORMAT));
-            textViewDays.setBackgroundColor(ColorUtils.HSLToColor(hsl));
-            textViewDays.setText(String.format(Locale.ENGLISH, "%d", days));
+            final float maxDaysR0 = 120.0f;
+            final float maxHR0 = 130.0f;
+            final float maxDaysR1 = 210.0f;
+            final float maxHR1 = 220.0f;
 
+            final LocalDate dateNow = LocalDate.now();
+            LocalDate r0 = trolley.getDateR0();
+            long days = ChronoUnit.DAYS.between(r0, dateNow);
+            float[] hsl = {0, 1, 0.5f};
+            hsl[0] = days > maxDaysR0 ? 0 : (maxDaysR0 - days) / maxDaysR0 * maxHR0;
+            textViewDateR0.setText(r0.format(ValueConstants.DATE_FORMAT));
+            textViewDaysR0.setBackgroundColor(ColorUtils.HSLToColor(hsl));
+            textViewDaysR0.setText(String.format(Locale.ENGLISH, "%d", days));
+
+            LocalDate r1 = trolley.getDateR1();
+            days = ChronoUnit.DAYS.between(r1, dateNow);
+            hsl[0] = days > maxDaysR1 ? 0 : (maxDaysR1 - days) / maxDaysR1 * maxHR1;
+            textViewDateR1.setText(r1.format(ValueConstants.DATE_FORMAT));
+            textViewDaysR1.setBackgroundColor(ColorUtils.HSLToColor(hsl));
+            textViewDaysR1.setText(String.format(Locale.ENGLISH, "%d", days));
         }
 
     }
