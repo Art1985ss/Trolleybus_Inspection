@@ -37,10 +37,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Datums :"/>
+            android:text="Datums R0 :"/>
 
         <EditText
-            android:id="@+id/edit_text_date"
+            android:id="@+id/edit_text_dateR0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="dd.mm.yyyy"
+            android:inputType="date"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datums R1 :"/>
+        <EditText
+            android:id="@+id/edit_text_dateR1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="dd.mm.yyyy"
