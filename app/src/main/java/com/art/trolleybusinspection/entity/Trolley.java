@@ -17,9 +17,12 @@ import java.util.Locale;
 public class Trolley implements Comparable<Trolley> {
     @PrimaryKey
     private final int id;
-    @ColumnInfo(name = "date")
+    @ColumnInfo(name = "r0_date")
     @TypeConverters({Converter.class})
-    private LocalDate date;
+    private LocalDate dateR0;
+    @ColumnInfo(name = "r1_date")
+    @TypeConverters({Converter.class})
+    private LocalDate dateR1;
     @ColumnInfo(name = "model")
     @TypeConverters({Converter.class})
     private TrolleyModel model;
@@ -47,12 +50,20 @@ public class Trolley implements Comparable<Trolley> {
         return id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDateR0() {
+        return dateR0;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateR0(LocalDate dateR0) {
+        this.dateR0 = dateR0;
+    }
+
+    public LocalDate getDateR1() {
+        return dateR1;
+    }
+
+    public void setDateR1(LocalDate dateR1) {
+        this.dateR1 = dateR1;
     }
 
     public TrolleyModel getModel() {
@@ -127,7 +138,7 @@ public class Trolley implements Comparable<Trolley> {
     @Override
     public String toString() {
         return "ID " + id + " Model " + model + "\n" +
-                "Date " + date.format(ValueConstants.DATE_FORMAT) + "\n" +
+                "Date " + dateR0.format(ValueConstants.DATE_FORMAT) + "\n" +
                 "Vilcejs " + tractionMotorNumber + "\n" +
                 "Dizelgenerators " + dieselGeneratorNumber + "\n" +
                 "Dizeldzinejs " + dieselEngineNumber + "\n" +
@@ -138,6 +149,6 @@ public class Trolley implements Comparable<Trolley> {
 
     public String toCSV() {
         return String.format(Locale.ENGLISH, "%d;%s;%s;%d;%d;%d;%d;%d;%d;%s;",
-                id, model, date.format(ValueConstants.DATE_FORMAT), tractionMotorNumber, akb1Id, akb2Id, dieselGeneratorNumber, dieselEngineNumber, mileage, note);
+                id, model, dateR0.format(ValueConstants.DATE_FORMAT), tractionMotorNumber, akb1Id, akb2Id, dieselGeneratorNumber, dieselEngineNumber, mileage, note);
     }
 }

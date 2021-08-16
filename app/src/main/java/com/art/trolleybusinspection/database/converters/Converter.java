@@ -17,13 +17,14 @@ public class Converter {
     public TrolleyModel toTrolleyModel(String string) {
         return TrolleyModel.getByText(string);
     }
+
     @TypeConverter
-    public String fromDate(LocalDate date) {
-        return date.toString();
+    public long fromDate(LocalDate date) {
+        return date.toEpochDay();
     }
 
     @TypeConverter
-    public LocalDate toDate(String string) {
-        return LocalDate.parse(string);
+    public LocalDate toDate(long epoch) {
+        return LocalDate.ofEpochDay(epoch);
     }
 }

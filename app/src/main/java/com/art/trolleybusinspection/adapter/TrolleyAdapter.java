@@ -51,7 +51,7 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
 
     public void setTrolleys(List<Trolley> trolleys) {
         if (sortByDate) {
-            this.trolleys = trolleys.stream().sorted(Comparator.comparing(Trolley::getDate).reversed()).collect(Collectors.toList());
+            this.trolleys = trolleys.stream().sorted(Comparator.comparing(Trolley::getDateR0).reversed()).collect(Collectors.toList());
         } else {
             this.trolleys = trolleys;
         }
@@ -102,11 +102,11 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
             float maxDays = 120.0f;
             float maxH = 130.0f;
             LocalDate dateNow = LocalDate.now();
-            LocalDate dateOld = trolley.getDate();
+            LocalDate dateOld = trolley.getDateR0();
             long days = ChronoUnit.DAYS.between(dateOld, dateNow);
             float[] hsl = {0, 1, 0.5f};
             hsl[0] = days > maxDays ? 0 : (maxDays - days) / maxDays * maxH;
-            textViewDate.setText(trolley.getDate().format(ValueConstants.DATE_FORMAT));
+            textViewDate.setText(trolley.getDateR0().format(ValueConstants.DATE_FORMAT));
             textViewDays.setBackgroundColor(ColorUtils.HSLToColor(hsl));
             textViewDays.setText(String.format(Locale.ENGLISH, "%d", days));
 
