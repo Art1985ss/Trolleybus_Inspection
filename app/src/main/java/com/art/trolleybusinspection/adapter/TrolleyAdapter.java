@@ -104,22 +104,21 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
 
         private void fillDateField(Trolley trolley) {
             final float maxDaysR0 = 120.0f;
-            final float maxHR0 = 130.0f;
+            final float maxH = 130.0f;
             final float maxDaysR1 = 210.0f;
-            final float maxHR1 = 220.0f;
 
             final LocalDate dateNow = LocalDate.now();
             LocalDate r0 = trolley.getDateR0();
             long days = ChronoUnit.DAYS.between(r0, dateNow);
             float[] hsl = {0, 1, 0.5f};
-            hsl[0] = days > maxDaysR0 ? 0 : (maxDaysR0 - days) / maxDaysR0 * maxHR0;
+            hsl[0] = days > maxDaysR0 ? 0 : (maxDaysR0 - days) / maxDaysR0 * maxH;
             textViewDateR0.setText(r0.format(ValueConstants.DATE_FORMAT));
             textViewDaysR0.setBackgroundColor(ColorUtils.HSLToColor(hsl));
             textViewDaysR0.setText(String.format(Locale.ENGLISH, "%d", days));
 
             LocalDate r1 = trolley.getDateR1();
             days = ChronoUnit.DAYS.between(r1, dateNow);
-            hsl[0] = days > maxDaysR1 ? 0 : (maxDaysR1 - days) / maxDaysR1 * maxHR1;
+            hsl[0] = days > maxDaysR1 ? 0 : (maxDaysR1 - days) / maxDaysR1 * maxH;
             textViewDateR1.setText(r1.format(ValueConstants.DATE_FORMAT));
             textViewDaysR1.setBackgroundColor(ColorUtils.HSLToColor(hsl));
             textViewDaysR1.setText(String.format(Locale.ENGLISH, "%d", days));
