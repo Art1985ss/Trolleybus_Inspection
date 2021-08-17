@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/sort_by_date"
-        android:title="Sort by date"
-        android:icon="@drawable/ic_sort_by_date"
-        android:checkable="true"
-        android:checked="false"
-        app:showAsAction="withText"/>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/sort_by_id"
+            android:title="Sort by id"
+            android:checked="true"
+            app:showAsAction="withText" />
+        <item
+            android:id="@+id/sort_by_dateR0"
+            android:title="Sort by R0"
+            app:showAsAction="withText" />
+        <item
+            android:id="@+id/sort_by_dateR1"
+            android:title="Sort by R1"
+            app:showAsAction="withText" />
+
+    </group>
+
     <item
         android:id="@+id/show_statistics"
-        android:title="Show statistics"
         android:icon="@drawable/ic_statistics"
-        app:showAsAction="withText"/>
+        android:title="Show statistics"
+        app:showAsAction="withText" />
     <item
         android:id="@+id/export_to_csv"
-        android:title="Export to csv"
         android:icon="@drawable/ic_baseline_import_export_24"
+        android:title="Export to csv"
         app:showAsAction="withText" />
 
 </menu>

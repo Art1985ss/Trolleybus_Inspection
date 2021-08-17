@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
 public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyHolder> {
     private List<Trolley> trolleys = new ArrayList<>();
     private OnItemClickListener listener;
-    private final boolean sortByDate;
+    private final Comparator<Trolley> comparator;
 
-    public TrolleyAdapter(boolean sortByDate) {
-        this.sortByDate = sortByDate;
+    public TrolleyAdapter(Comparator<Trolley> comparator) {
+        this.comparator = comparator;
     }
 
     @NonNull
@@ -50,8 +50,10 @@ public class TrolleyAdapter extends RecyclerView.Adapter<TrolleyAdapter.TrolleyH
     }
 
     public void setTrolleys(List<Trolley> trolleys) {
-        if (sortByDate) {
-            this.trolleys = trolleys.stream().sorted(Comparator.comparing(Trolley::getDateR0).reversed()).collect(Collectors.toList());
+        if (comparator != null) {
+            this.trolleys = trolleys.stream()
+                    .sorted(comparator)
+                    .collect(Collectors.toList());
         } else {
             this.trolleys = trolleys;
         }

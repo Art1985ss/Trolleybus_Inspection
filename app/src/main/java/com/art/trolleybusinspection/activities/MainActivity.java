@@ -2,19 +2,21 @@ package com.art.trolleybusinspection.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.Context;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Checkable;
 import android.widget.Toast;
 
 import com.art.trolleybusinspection.R;
@@ -26,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -40,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        prepareView(false);
+        prepareView(null);
     }
 
-    private void prepareView(boolean sortByDate) {
+    private void prepareView(Comparator<Trolley> comparator) {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        trolleyAdapter = new TrolleyAdapter(sortByDate);
+        trolleyAdapter = new TrolleyAdapter(comparator);
         recyclerView.setAdapter(trolleyAdapter);
 
         viewModel = new ViewModelProvider(
@@ -102,20 +105,30 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.sort_by_date) {
-            if (item.isChecked()) {
-                item.setChecked(false);
-                prepareView(false);
-            } else {
+        Comparator<Trolley> trolleyComparator = Comparator.comparing(Trolley::getId);
+        switch (item.getItemId()) {
+            case R.id.sort_by_id:
                 item.setChecked(true);
-                prepareView(true);
-            }
-        } else if (item.getItemId() == R.id.show_statistics) {
-            Intent intent = new Intent(MainActivity.this, Statistics.class);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.export_to_csv) {
-            exportToCSV();
+                trolleyComparator = Comparator.comparing(Trolley::getId);
+                break;
+            case R.id.sort_by_dateR0:
+                item.setChecked(true);
+                trolleyComparator = Comparator.comparing(Trolley::getDateR0).reversed();
+                break;
+            case R.id.sort_by_dateR1:
+                item.setChecked(true);
+                trolleyComparator = Comparator.comparing(Trolley::getDateR1).reversed();
+                break;
+            case R.id.show_statistics:
+                Intent intent = new Intent(MainActivity.this, Statistics.class);
+                startActivity(intent);
+                break;
+            case R.id.export_to_csv:
+                Toast.makeText(this, "Not implemented!", Toast.LENGTH_LONG).show();
+            default:
+                return super.onOptionsItemSelected(item);
         }
+        prepareView(trolleyComparator);
         return super.onOptionsItemSelected(item);
 
     }
