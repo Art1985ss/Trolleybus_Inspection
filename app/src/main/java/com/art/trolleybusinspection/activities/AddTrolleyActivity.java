@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class AddTrolleyActivity extends AppCompatActivity {
     private EditText editTextDieselGenerator;
     private EditText editTextMillage;
     private EditText editTextNotes;
+
 
 
     @Override
@@ -109,6 +111,21 @@ public class AddTrolleyActivity extends AppCompatActivity {
         } else {
             setTitle("Add new trolley");
         }
+
+        Button addNoteDate = findViewById(R.id.add_date_btn);
+        addNoteDate.setOnClickListener(v -> {
+            String text = editTextNotes.getText().toString().trim();
+            text += "\n";
+            Calendar calendar = Calendar.getInstance();
+            LocalDate date = LocalDate.of(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            text += date.format(DATE_FORMAT);
+            text += " ";
+            editTextNotes.setText(text);
+            editTextNotes.setSelection(text.length());
+        });
     }
 
     private void populate(int id) {
